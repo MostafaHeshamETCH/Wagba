@@ -5,6 +5,8 @@ public class CartModel {
     private String price;
     private int numberOfItems;
 
+    public CartModel () {}
+
     public CartModel(String name, String price, int numberOfItems) {
         this.name = name;
         this.price = price;

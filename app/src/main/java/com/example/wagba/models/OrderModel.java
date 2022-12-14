@@ -7,6 +7,8 @@ public class OrderModel {
     private String date;
     private String time;
 
+    public OrderModel() {}
+
     public OrderModel(String name, String imageUrl, String price, String date, String time) {
         this.name = name;
         this.imageUrl = imageUrl;
