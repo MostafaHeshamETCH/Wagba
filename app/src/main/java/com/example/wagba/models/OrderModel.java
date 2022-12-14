@@ -1,11 +1,22 @@
 package com.example.wagba.models;
 
+import java.util.ArrayList;
+
 public class OrderModel {
     private String name;
     private String imageUrl;
     private String price;
     private String date;
     private String time;
+    private ArrayList<OrderDetailsModel> orderDetails;
+
+    public ArrayList<OrderDetailsModel> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(ArrayList<OrderDetailsModel> orderDetails) {
+        this.orderDetails = orderDetails;
+    }
 
     public OrderModel() {}
 

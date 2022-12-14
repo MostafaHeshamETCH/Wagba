@@ -55,6 +55,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>  {
         viewHolder.descTextView.setText(menu.get(position).getDesc());
         viewHolder.priceTextView.setText(menu.get(position).getPrice());
         Picasso.get().load(menu.get(position).getImageUrl()).into(viewHolder.image);
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)

@@ -18,6 +18,7 @@ import com.example.wagba.adapters.RestaurantAdapter;
 import com.example.wagba.databinding.ActivityHomepageBinding;
 import com.example.wagba.models.MenuModel;
 import com.example.wagba.models.RestaurantModel;
+import com.example.wagba.models.UserModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,8 +33,11 @@ public class Homepage extends AppCompatActivity {
     ArrayList<RestaurantModel> restaurants;
     private ActivityHomepageBinding binding;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("restaurants");
+    DatabaseReference restaurantsRef = database.getReference("restaurants");
+    DatabaseReference userRef = database.getReference("users");
     RestaurantAdapter restaurantAdapter;
+    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    UserModel currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,13 +76,36 @@ public class Homepage extends AppCompatActivity {
 
         restaurants = new ArrayList<RestaurantModel>();
         restaurantAdapter = new RestaurantAdapter(restaurants);
+        binding.userName.setText("");
 
-        myRef.addValueEventListener(new ValueEventListener() {
+        userRef.child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                 currentUser = dataSnapshot.getValue(UserModel.class);
+                 binding.userName.setText("Hi " + currentUser.getName() + "!");
+                 if(currentUser.getCart() != null){
+                     binding.cartShortcutNumber.setText(String.valueOf(currentUser.getCart().size()) + " items");
+                 } else {
+                     binding.cartShortcutNumber.setText("0 items");
+                 }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("RT DB", "Failed to read value.", error.toException());
+            }
+        });
+
+        restaurantsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 // restaurants = (ArrayList<RestaurantModel>) dataSnapshot.getValue();
+                restaurants.clear();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     restaurants.add(postSnapshot.getValue(RestaurantModel.class));
                 }
@@ -94,6 +121,8 @@ public class Homepage extends AppCompatActivity {
                 Log.w("RT DB", "Failed to read value.", error.toException());
             }
         });
+
+
 
 
         binding.resRecyclerView.setAdapter(restaurantAdapter);
@@ -189,7 +218,7 @@ public class Homepage extends AppCompatActivity {
         aboMenu.add(new MenuModel("Super Syrian", "Super Syrian Chicken Shawerma Sandwich", "https://s3-eu-west-1.amazonaws.com/elmenusv5-stg/Normal/9a58d87b-25a6-4301-ad87-29b37677377e.jpg", "50.0"));
         restaurants.add(new RestaurantModel("Abo Mazen", "https://s3-eu-west-1.amazonaws.com/elmenusv5-stg/Normal/19d63f5d-c70e-4f9d-840f-aba03156ea95.jpg", "4.0 (109)", "45min", aboMenu));
 
-        myRef.setValue(restaurants);
+        restaurantsRef.setValue(restaurants);
     }
 
     // dismiss keyboard when user clicks outside any input field

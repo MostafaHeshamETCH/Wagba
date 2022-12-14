@@ -10,14 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wagba.R;
-import com.example.wagba.models.OrderDetails;
+import com.example.wagba.models.OrderDetailsModel;
 
 import java.util.ArrayList;
 
 public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.ViewHolder> {
-    ArrayList<OrderDetails> ordersHistory;
+    ArrayList<OrderDetailsModel> ordersHistory;
 
-    public OrderItemAdapter(ArrayList<OrderDetails> ordersHistory) {
+    public OrderItemAdapter(ArrayList<OrderDetailsModel> ordersHistory) {
         this.ordersHistory = ordersHistory;
     }
 

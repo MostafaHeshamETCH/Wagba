@@ -6,16 +6,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.wagba.adapters.OrderAdapter;
 import com.example.wagba.adapters.OrderItemAdapter;
 import com.example.wagba.databinding.ActivityOrderStatusBinding;
-import com.example.wagba.models.OrderDetails;
+import com.example.wagba.models.OrderDetailsModel;
 
 import java.util.ArrayList;
 
 public class OrderStatus extends AppCompatActivity {
 
-    ArrayList<OrderDetails> orders;
+    ArrayList<OrderDetailsModel> orders;
     private ActivityOrderStatusBinding binding;
 
     @Override
@@ -25,9 +24,9 @@ public class OrderStatus extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        orders = new ArrayList<OrderDetails>();
+        orders = new ArrayList<OrderDetailsModel>();
 
-        orders.add(new OrderDetails("McDonald's", "165.0" ));
+        orders.add(new OrderDetailsModel("McDonald's", "165.0" ));
 
         OrderItemAdapter orderItemAdapter = new OrderItemAdapter(orders);
 

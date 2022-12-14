@@ -1,11 +1,11 @@
 package com.example.wagba.models;
 
-public class OrderDetails {
+public class OrderDetailsModel {
     private String name, price;
 
-    public OrderDetails() {}
+    public OrderDetailsModel() {}
 
-    public OrderDetails(String name, String price) {
+    public OrderDetailsModel(String name, String price) {
         this.name = name;
         this.price = price;
     }

@@ -17,11 +17,18 @@ import android.widget.Toast;
 
 import com.example.wagba.databinding.ActivityMainBinding;
 import com.example.wagba.databinding.ActivitySignUpBinding;
+import com.example.wagba.models.CartModel;
+import com.example.wagba.models.OrderModel;
+import com.example.wagba.models.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 public class SignUp extends AppCompatActivity {
     private ActivitySignUpBinding binding;
@@ -111,7 +118,11 @@ public class SignUp extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("Auth", "createUserWithEmail:success");
 
+                                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                DatabaseReference myRef = database.getReference("users");
+                                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+                                myRef.child(uid).setValue(new UserModel(email, name, new ArrayList<CartModel>(), new ArrayList<OrderModel>()));
 
                                 Intent i = new Intent(SignUp.this, Homepage.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
