@@ -77,6 +77,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
                         intent.putExtra("name", restaurants.get(viewHolder.getAdapterPosition()).getName());
                         intent.putExtra("rating", restaurants.get(viewHolder.getAdapterPosition()).getRating());
                         intent.putExtra("time", restaurants.get(viewHolder.getAdapterPosition()).getTime());
+                        intent.putExtra("image", restaurants.get(viewHolder.getAdapterPosition()).getImageUrl());
                         v.getContext().startActivity(intent);
                     }
                 }

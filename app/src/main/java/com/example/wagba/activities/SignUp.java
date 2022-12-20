@@ -96,7 +96,7 @@ public class SignUp extends AppCompatActivity {
             binding.nameTv.requestFocus();
             valid = false;
         }
-        if(!email.matches("[0-9][0-9]P[0-9][0-9][0-9][0-9]@eng\\.asu\\.edu\\.eg")){
+        if(!email.matches("[0-9][0-9][Pp][0-9][0-9][0-9][0-9]@eng\\.asu\\.edu\\.eg")){
             binding.emailTv.setError("Only official ASU emails allowed!");
             valid = false;
         }

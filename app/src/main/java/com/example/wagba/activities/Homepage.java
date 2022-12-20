@@ -122,9 +122,6 @@ public class Homepage extends AppCompatActivity {
             }
         });
 
-
-
-
         binding.resRecyclerView.setAdapter(restaurantAdapter);
         binding.resRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         // adds bottom padding to recycler view to clear space fot cart

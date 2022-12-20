@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,12 +27,15 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>  {
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView nameTextView, descTextView, priceTextView;
         ImageView image;
+        LinearLayout item;
+
         public ViewHolder(View view) {
             super(view);
             nameTextView = view.findViewById(R.id.menu_item_name);
             descTextView = view.findViewById(R.id.menu_item_desc);
             priceTextView = view.findViewById(R.id.menu_item_price);
             image = view.findViewById(R.id.menu_item_image);
+            item = view.findViewById(R.id.meal_item);
         }
     }
 
@@ -55,7 +59,9 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>  {
         viewHolder.descTextView.setText(menu.get(position).getDesc());
         viewHolder.priceTextView.setText(menu.get(position).getPrice());
         Picasso.get().load(menu.get(position).getImageUrl()).into(viewHolder.image);
+        viewHolder.item.setOnClickListener(view -> {
 
+        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)
