@@ -46,6 +46,21 @@ public class Homepage extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        binding.profileIcon.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+
+                            Intent k = new Intent(Homepage.this, Profile.class);
+                            startActivity(k);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        );
+
         binding.orderHistoryIcon.setOnClickListener(
                 new View.OnClickListener() {
                     @Override

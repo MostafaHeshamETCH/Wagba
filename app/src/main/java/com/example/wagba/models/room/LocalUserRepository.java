@@ -12,13 +12,13 @@ public class LocalUserRepository {
     private LocalUserDao mLocalUserDao;
     private LiveData<List<LocalUser>> mAllLocalUsers;
 
-    LocalUserRepository(Application application) {
+    public LocalUserRepository(Application application) {
         LocalUserDatabase db = LocalUserDatabase.getDatabase(application);
         mLocalUserDao = db.localUserDao();
         mAllLocalUsers = mLocalUserDao.getAllLocalUsers();
     }
 
-    LiveData<List<LocalUser>> getAllWords() {
+    public LiveData<List<LocalUser>> getAllLocalUsers() {
         return mAllLocalUsers;
     }
 
@@ -37,6 +37,25 @@ public class LocalUserRepository {
         @Override
         protected Void doInBackground(final LocalUser... params) {
             mAsyncTaskDao.insert(params[0]);
+            return null;
+        }
+    }
+
+    public void delete () {
+        new deleteAsyncTask(mLocalUserDao).execute(); // insert in separate thread
+    }
+
+    private static class deleteAsyncTask extends AsyncTask<LocalUser, Void, Void> {
+
+        private LocalUserDao mAsyncTaskDao;
+
+        deleteAsyncTask(LocalUserDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final LocalUser... params) {
+            mAsyncTaskDao.deleteAll();
             return null;
         }
     }

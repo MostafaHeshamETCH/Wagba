@@ -59,4 +59,7 @@
     <string name="name">Name</string>
     <string name="_2_items">2 items</string>
     <string name="_0_items">0 items</string>
+    <string name="profile">Profile</string>
+    <string name="address">Address</string>
+    <string name="fifth_settlement_cairo_egypt">Fifth Settlement, Cairo, Egypt</string>
 </resources>
