@@ -16,7 +16,9 @@ import android.widget.EditText;
 
 import com.example.wagba.adapters.RestaurantAdapter;
 import com.example.wagba.databinding.ActivityHomepageBinding;
+import com.example.wagba.models.CartModel;
 import com.example.wagba.models.MenuModel;
+import com.example.wagba.models.OrderModel;
 import com.example.wagba.models.RestaurantModel;
 import com.example.wagba.models.UserModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,7 +28,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Homepage extends AppCompatActivity {
 
@@ -98,13 +102,28 @@ public class Homepage extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                 currentUser = dataSnapshot.getValue(UserModel.class);
-                 binding.userName.setText("Hi " + currentUser.getName() + "!");
-                 if(currentUser.getCart() != null){
-                     binding.cartShortcutNumber.setText(String.valueOf(currentUser.getCart().size()) + " items");
-                 } else {
-                     binding.cartShortcutNumber.setText("0 items");
-                 }
+                ArrayList<CartModel> cart = new ArrayList<>();
+                for (DataSnapshot ds : dataSnapshot.child("cart").getChildren()) {
+                    CartModel item = ds.getValue(CartModel.class);
+                    cart.add(item);
+                }
+                ArrayList<OrderModel> history = new ArrayList<>();
+                for (DataSnapshot ds : dataSnapshot.child("ordersHistory").getChildren()) {
+                    OrderModel item = ds.getValue(OrderModel.class);
+                    history.add(item);
+                }
+                currentUser = new UserModel(
+                        dataSnapshot.child("email").getValue(String.class),
+                        dataSnapshot.child("name").getValue(String.class),
+                        cart,
+                        history
+                );
+                binding.userName.setText("Hi " + currentUser.getName() + "!");
+                if (currentUser.getCart() != null) {
+                    binding.cartShortcutNumber.setText(String.valueOf(currentUser.getCart().size()) + " items");
+                } else {
+                    binding.cartShortcutNumber.setText("0 items");
+                }
             }
 
             @Override
@@ -121,7 +140,7 @@ public class Homepage extends AppCompatActivity {
                 // whenever data at this location is updated.
                 // restaurants = (ArrayList<RestaurantModel>) dataSnapshot.getValue();
                 restaurants.clear();
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     restaurants.add(postSnapshot.getValue(RestaurantModel.class));
                 }
                 restaurantAdapter = new RestaurantAdapter(restaurants);
@@ -176,7 +195,7 @@ public class Homepage extends AppCompatActivity {
         willysMenu.add(new MenuModel("Smokehouse Burger", "Beef patty, beef bacon, fried onions, American cheese, hickory BBQ sauce, lettuce, tomato and Louisiana sauce", "https://s3-eu-west-1.amazonaws.com/elmenusv5-stg/Normal/735c1ff8-4093-4ad2-962e-c0c5eaa749cd.jpg", "79.5"));
         willysMenu.add(new MenuModel("Brooklyn Burger", "Beef patty, mushrooms, American cheese, country sauce, mushroom sauce", "https://s3-eu-west-1.amazonaws.com/elmenusv5-stg/Normal/6eb8a00c-3f2d-4e2b-8dce-e3c34bf5f3ad.jpg", "69.5"));
         willysMenu.add(new MenuModel("Nacho BBQ", "Beef patty, cheese sauce, beef bacon, frizzled fried onions, hickory BBQ sauce, Louisiana sauce, deep fried tortilla bread", "https://s3-eu-west-1.amazonaws.com/elmenusv5-stg/Normal/a21c7776-3f3b-47b0-9509-2a0fabc3519b.jpg", "89.5"));
-        restaurants.add(new RestaurantModel("Willy's", "https://fastly.4sqi.net/img/general/600x600/46997485_gmX5h6TIJhw7q_wBZSXCssATfjYqCuM11U-Yn7y1BL4.jpg", "4.2 (7)", "45min",willysMenu));
+        restaurants.add(new RestaurantModel("Willy's", "https://fastly.4sqi.net/img/general/600x600/46997485_gmX5h6TIJhw7q_wBZSXCssATfjYqCuM11U-Yn7y1BL4.jpg", "4.2 (7)", "45min", willysMenu));
 
         ArrayList<MenuModel> papaMenu = new ArrayList<MenuModel>();
         papaMenu.add(new MenuModel("Chicken Ranch", "Grilled chicken, tomato, fresh mushroom with ranch sauce", "https://s3-eu-west-1.amazonaws.com/elmenusv5-stg/Normal/8990eaa5-1e62-4d9e-bbdf-2a1d425a7ff3.jpg", "255.0"));

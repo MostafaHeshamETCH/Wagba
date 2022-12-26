@@ -1,16 +1,29 @@
 package com.example.wagba.models;
 
-public class CartModel {
+import java.io.Serializable;
+
+public class CartModel implements Serializable {
     private String name;
     private String price;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    private String imageUrl;
     private int numberOfItems;
 
     public CartModel () {}
 
-    public CartModel(String name, String price, int numberOfItems) {
+    public CartModel(String name, String price, int numberOfItems, String imageUrl) {
         this.name = name;
         this.price = price;
         this.numberOfItems = numberOfItems;
+        this.imageUrl = imageUrl;
     }
 
     public String getName() {

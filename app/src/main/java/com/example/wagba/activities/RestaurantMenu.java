@@ -11,7 +11,9 @@ import android.view.View;
 import com.example.wagba.adapters.MenuAdapter;
 import com.example.wagba.adapters.RestaurantAdapter;
 import com.example.wagba.databinding.ActivityRestaurantMenuBinding;
+import com.example.wagba.models.CartModel;
 import com.example.wagba.models.MenuModel;
+import com.example.wagba.models.OrderModel;
 import com.example.wagba.models.UserModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -43,7 +45,22 @@ public class RestaurantMenu extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                currentUser = dataSnapshot.getValue(UserModel.class);
+                ArrayList<CartModel> cart = new ArrayList<>();
+                for (DataSnapshot ds : dataSnapshot.child("cart").getChildren()) {
+                    CartModel item = ds.getValue(CartModel.class);
+                    cart.add(item);
+                }
+                ArrayList<OrderModel> history = new ArrayList<>();
+                for (DataSnapshot ds : dataSnapshot.child("cart").getChildren()) {
+                    OrderModel item = ds.getValue(OrderModel.class);
+                    history.add(item);
+                }
+                currentUser = new UserModel(
+                        dataSnapshot.child("email").getValue(String.class),
+                        dataSnapshot.child("name").getValue(String.class),
+                        cart,
+                        history
+                );
                 assert currentUser != null;
                 if(currentUser.getCart() != null){
                     binding.cartShortcutNumber.setText(currentUser.getCart().size() + " items");

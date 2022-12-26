@@ -1,8 +1,9 @@
 package com.example.wagba.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class UserModel {
+public class UserModel implements Serializable {
     private String name, email;
 
     private ArrayList<CartModel> cart;
