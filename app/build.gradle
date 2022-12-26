@@ -15,6 +15,15 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                    "room.schemaLocation": "$projectDir/schemas".toString(),
+                    "room.incremental":"true",
+                    "room.expandProjection":"true"
+                ]
+            }
+        }
     }
 
     buildTypes {
@@ -33,6 +42,16 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.room:room-runtime:2.4.3'
+    annotationProcessor 'androidx.room:room-compiler:2.4.3'
+    def room_version = "2.4.3"
+    def lifecycle_version = "2.4.0-alpha02"
+    // ROOM DB
+    implementation "androidx.room:room-common:$room_version"
+    annotationProcessor "androidx.room:room-common:$room_version"
+    // Lifecycle Components
+    implementation "androidx.lifecycle:lifecycle-common-java8:2.5.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:2.5.1"
 
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.7.0'
