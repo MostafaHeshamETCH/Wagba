@@ -141,7 +141,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="25dp"
                         android:fontFamily="@font/montserratregular"
-                        android:text="@string/_2_items"
+                        android:text="@string/_0_items"
                         android:textColor="#EFEFEF"
                         android:textSize="12sp" />
 

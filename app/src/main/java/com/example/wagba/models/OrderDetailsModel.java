@@ -2,12 +2,14 @@ package com.example.wagba.models;
 
 public class OrderDetailsModel {
     private String name, price;
+    private int numberOfItems;
 
     public OrderDetailsModel() {}
 
-    public OrderDetailsModel(String name, String price) {
+    public OrderDetailsModel(String name, String price, int numberOfItems) {
         this.name = name;
         this.price = price;
+        this.numberOfItems = numberOfItems;
     }
 
     public String getName() {

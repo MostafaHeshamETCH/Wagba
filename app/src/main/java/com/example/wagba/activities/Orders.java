@@ -31,10 +31,8 @@ public class Orders extends AppCompatActivity {
 
         orders = new ArrayList<OrderModel>();
 
-        orders.add(new OrderModel("McDonald's", "", "165.0", "9/12/2022", "2:30 PM"));
-        orders.add(new OrderModel("McDonald's", "", "215.0", "8/12/2022", "1:30 PM"));
-        orders.add(new OrderModel("McDonald's", "", "305.0", "7/12/2022", "12:00 AM"));
-
+        orders.add(new OrderModel("McDonald's", "", "165.0", "9/12/2022", "2:30 PM", new ArrayList<>(), "", "", "", "", "", ""));
+        orders.add(new OrderModel("McDonald's", "", "165.0", "9/12/2022", "2:30 PM", new ArrayList<>(), "", "", "", "", "", ""));
         OrderAdapter restaurantAdapter = new OrderAdapter(orders);
 
         binding.ordersRecyclerView.setAdapter(restaurantAdapter);

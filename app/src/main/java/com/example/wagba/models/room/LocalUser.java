@@ -9,10 +9,10 @@ import androidx.room.PrimaryKey;
 public class LocalUser {
     @PrimaryKey
     @NonNull
-    @ColumnInfo(name = "address")
-    private String mAddress;
+    @ColumnInfo(name = "year")
+    private String uniYear;
 
-    public LocalUser(@NonNull String address) {this.mAddress = address;}
+    public LocalUser(@NonNull String uniYear) {this.uniYear = uniYear;}
 
-    public String getAddress(){return this.mAddress;}
+    public String getUniYear(){return this.uniYear;}
 }

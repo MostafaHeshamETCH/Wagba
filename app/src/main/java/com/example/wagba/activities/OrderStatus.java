@@ -26,7 +26,7 @@ public class OrderStatus extends AppCompatActivity {
 
         orders = new ArrayList<OrderDetailsModel>();
 
-        orders.add(new OrderDetailsModel("McDonald's", "165.0" ));
+        orders.add(new OrderDetailsModel("McDonald's", "165.0" , 1));
 
         OrderItemAdapter orderItemAdapter = new OrderItemAdapter(orders);
 

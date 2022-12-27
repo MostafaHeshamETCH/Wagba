@@ -6,7 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {LocalUser.class}, version = 1, exportSchema = false)
+@Database(entities = {LocalUser.class}, version = 2, exportSchema = false)
 public abstract class LocalUserDatabase extends RoomDatabase {
     public abstract LocalUserDao localUserDao();
     private static LocalUserDatabase INSTANCE;

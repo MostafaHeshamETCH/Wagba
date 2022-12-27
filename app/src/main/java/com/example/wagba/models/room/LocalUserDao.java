@@ -15,6 +15,6 @@ public interface LocalUserDao {
     @Query("DELETE FROM local_user_table")
     void deleteAll();
 
-    @Query("SELECT * FROM local_user_table ORDER BY address ASC")
+    @Query("SELECT * FROM local_user_table ORDER BY year ASC")
     LiveData<List<LocalUser>> getAllLocalUsers();
 }

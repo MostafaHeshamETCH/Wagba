@@ -36,7 +36,7 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onChanged(List<LocalUser> localUsers) {
                 if(!localUsers.isEmpty()){
-                    binding.address.setText(localUsers.get(0).getAddress());
+                    binding.address.setText(localUsers.get(0).getUniYear());
                 } else {
                     binding.address.setText("No data entered yet");
                 }

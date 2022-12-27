@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.wagba.adapters.CartAdapter;
 import com.example.wagba.adapters.RestaurantAdapter;
@@ -28,7 +29,6 @@ public class Cart extends AppCompatActivity {
     ArrayList<CartModel> cartItems;
     private ActivityCartBinding binding;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference restaurantsRef = database.getReference("restaurants");
     DatabaseReference userRef = database.getReference("users");
     CartAdapter cartAdapter;
     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -74,8 +74,8 @@ public class Cart extends AppCompatActivity {
                         System.out.println("Error " + e.getMessage());
                     }
                 }
-                binding.totalPrice.setText(String.valueOf(totalPrice));
-                binding.totalFinalPrice.setText(String.valueOf(totalPrice + 25.0));
+                binding.totalPrice.setText(String.format("%.2f", totalPrice));
+                binding.totalFinalPrice.setText(String.format("%.2f", totalPrice + 25.0));
             }
 
             @Override
@@ -99,16 +99,19 @@ public class Cart extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         try {
-                            Intent k = new Intent(Cart.this, DeliveryDetails.class);
-                            startActivity(k);
+                            if(!currentUser.getCart().isEmpty()){
+                                Intent k = new Intent(Cart.this, DeliveryDetails.class);
+                                startActivity(k);
+                            } else {
+                                Toast.makeText(Cart.this, "Empty Cart, Please add item to checkout", Toast.LENGTH_SHORT).show();
+                            }
+
                         } catch(Exception e) {
                             e.printStackTrace();
                         }
                     }
                 }
         );
-
-
 
 
         cartItems = new ArrayList<CartModel>();
