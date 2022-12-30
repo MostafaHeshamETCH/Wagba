@@ -129,7 +129,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                                 cart,
                                 history
                         );
-                        currentUser.getCart().get(viewHolder.getAdapterPosition()).setNumberOfItems(currentUser.getCart().get(viewHolder.getAdapterPosition()).getNumberOfItems() - 1);
+                        if(currentUser.getCart().get(viewHolder.getAdapterPosition()).getNumberOfItems() > 1){
+                            currentUser.getCart().get(viewHolder.getAdapterPosition()).setNumberOfItems(currentUser.getCart().get(viewHolder.getAdapterPosition()).getNumberOfItems() - 1);
+                        }
                         userRef.child(uid).setValue(currentUser);
                     }
                 }

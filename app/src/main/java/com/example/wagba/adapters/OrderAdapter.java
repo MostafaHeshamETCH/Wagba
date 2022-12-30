@@ -71,7 +71,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                         Bundle extra = new Bundle();
                         extra.putSerializable("orderDetails", ordersHistory.get(viewHolder.getAdapterPosition()).getOrderDetails());
                         intent.putExtra("extra", extra);
-                        intent.putExtra("date", ordersHistory.get(viewHolder.getAdapterPosition()).getName());
+                        intent.putExtra("date", ordersHistory.get(viewHolder.getAdapterPosition()).getDate());
                         intent.putExtra("price", ordersHistory.get(viewHolder.getAdapterPosition()).getPrice());
                         intent.putExtra("status", ordersHistory.get(viewHolder.getAdapterPosition()).getStatus());
                         intent.putExtra("image", ordersHistory.get(viewHolder.getAdapterPosition()).getImageUrl());
