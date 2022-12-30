@@ -2,9 +2,11 @@ package com.example.wagba.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wagba.R;
 import com.example.wagba.activities.OrderStatus;
 import com.example.wagba.models.OrderModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -27,6 +30,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView nameTextView, priceTextView, dateTextView, timeTextView;
         LinearLayout item;
+        ImageView image;
 
         public ViewHolder(View view) {
             super(view);
@@ -35,6 +39,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             timeTextView = view.findViewById(R.id.order_time);
             dateTextView = view.findViewById(R.id.order_date);
             item = view.findViewById(R.id.item_frame);
+            image = view.findViewById(R.id.image);
         }
     }
 
@@ -62,11 +67,19 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        v.getContext().startActivity(new Intent(v.getContext(), OrderStatus.class));
+                        Intent intent = new Intent(v.getContext(), OrderStatus.class);
+                        Bundle extra = new Bundle();
+                        extra.putSerializable("orderDetails", ordersHistory.get(viewHolder.getAdapterPosition()).getOrderDetails());
+                        intent.putExtra("extra", extra);
+                        intent.putExtra("date", ordersHistory.get(viewHolder.getAdapterPosition()).getName());
+                        intent.putExtra("price", ordersHistory.get(viewHolder.getAdapterPosition()).getPrice());
+                        intent.putExtra("status", ordersHistory.get(viewHolder.getAdapterPosition()).getStatus());
+                        intent.putExtra("image", ordersHistory.get(viewHolder.getAdapterPosition()).getImageUrl());
+                        v.getContext().startActivity(intent);
                     }
                 }
         );
-
+        Picasso.get().load(ordersHistory.get(position).getImageUrl()).into(viewHolder.image);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

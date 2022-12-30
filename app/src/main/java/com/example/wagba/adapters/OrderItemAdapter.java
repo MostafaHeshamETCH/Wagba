@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wagba.R;
 import com.example.wagba.models.OrderDetailsModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -23,11 +25,13 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView nameTextView, priceTextView;
+        ImageView image;
 
         public ViewHolder(View view) {
             super(view);
             nameTextView = view.findViewById(R.id.order_item_name);
             priceTextView = view.findViewById(R.id.order_item_price);
+            image = view.findViewById(R.id.image);
         }
     }
 
@@ -49,6 +53,8 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
         // contents of the view with that element
         viewHolder.nameTextView.setText(ordersHistory.get(position).getName());
         viewHolder.priceTextView.setText(ordersHistory.get(position).getPrice());
+        Picasso.get().load(ordersHistory.get(position).getImageUrl()).into(viewHolder.image);
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)

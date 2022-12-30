@@ -57,7 +57,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/restaurant"
+            android:text="@string/date"
             android:textSize="16sp"
             android:textColor="@color/black"
             android:fontFamily="@font/montserratsemibold"/>
@@ -68,6 +68,7 @@
             android:layout_weight="1"/>
 
         <TextView
+            android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/mcdonald_s"
@@ -107,6 +108,7 @@
             android:layout_weight="1"/>
 
         <TextView
+            android:id="@+id/price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/_165_0"
@@ -146,6 +148,7 @@
             android:layout_weight="1"/>
 
         <TextView
+            android:id="@+id/status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/delivered"

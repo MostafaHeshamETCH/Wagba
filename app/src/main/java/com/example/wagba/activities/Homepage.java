@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -31,10 +33,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Homepage extends AppCompatActivity {
 
-    ArrayList<RestaurantModel> restaurants;
+    ArrayList<RestaurantModel> restaurants, searchCopyRestaurants;
     private ActivityHomepageBinding binding;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference restaurantsRef = database.getReference("restaurants");
@@ -42,6 +45,8 @@ public class Homepage extends AppCompatActivity {
     RestaurantAdapter restaurantAdapter;
     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     UserModel currentUser;
+    boolean isSearching = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +54,38 @@ public class Homepage extends AppCompatActivity {
         binding = ActivityHomepageBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        binding.searchEditText.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                if (s.toString().length() == 0) {
+                    isSearching = false;
+                    restaurantAdapter = new RestaurantAdapter(restaurants);
+                    binding.resRecyclerView.setAdapter(restaurantAdapter);
+                    binding.resRecyclerView.setLayoutManager(new GridLayoutManager(Homepage.this, 2));
+                } else {
+                    isSearching = true;
+                }
+                if (isSearching) {
+                    searchCopyRestaurants = new ArrayList<>(restaurants);
+                    for (int i = 0; i < searchCopyRestaurants.size(); i++) {
+                        if (!searchCopyRestaurants.get(i).getName().toLowerCase().contains(s.toString().toLowerCase())) {
+                            searchCopyRestaurants.remove(i);
+                            i--;
+                        }
+                    }
+                    restaurantAdapter = new RestaurantAdapter(searchCopyRestaurants);
+                    binding.resRecyclerView.setAdapter(restaurantAdapter);
+                    binding.resRecyclerView.setLayoutManager(new GridLayoutManager(Homepage.this, 2));
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
 
         binding.profileIcon.setOnClickListener(
                 new View.OnClickListener() {
